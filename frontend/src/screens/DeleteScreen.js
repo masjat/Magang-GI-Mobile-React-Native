@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, Button, FlatList, Alert } from "react-native";
+import { View, Text, FlatList, Alert, TouchableOpacity, StyleSheet } from "react-native";
 import { getAllMahasiswa, deleteMahasiswa } from "../api";
 
 export default function DeleteScreen() {
@@ -10,7 +10,9 @@ export default function DeleteScreen() {
     setList(res.data);
   };
 
-  useEffect(() => { load(); }, []);
+  useEffect(() => {
+    load();
+  }, []);
 
   const confirmDelete = (nim) => {
     Alert.alert(
@@ -30,16 +32,14 @@ export default function DeleteScreen() {
   };
 
   const Item = ({ item }) => (
-    <View style={{
-      flexDirection: "row",
-      justifyContent: "space-between",
-      alignItems: "center",
-      paddingVertical: 8,
-      borderBottomWidth: 1,
-      borderColor: "#eee"
-    }}>
-      <Text>{item.name} ({item.nim})</Text>
-      <Button title="Hapus" onPress={() => confirmDelete(item.nim)} />
+    <View style={styles.card}>
+      <Text style={styles.text}>{item.name} ({item.nim})</Text>
+      <TouchableOpacity
+        style={[styles.button, styles.hapus]}
+        onPress={() => confirmDelete(item.nim)}
+      >
+        <Text style={styles.buttonText}>Hapus</Text>
+      </TouchableOpacity>
     </View>
   );
 
@@ -53,3 +53,33 @@ export default function DeleteScreen() {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  card: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    padding: 12,
+    marginBottom: 10,
+    backgroundColor: "#f9f9f9",
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: "#ddd",
+  },
+  text: {
+    fontSize: 16,
+  },
+  button: {
+    paddingVertical: 8,
+    paddingHorizontal: 16,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  hapus: {
+    backgroundColor: "red",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});

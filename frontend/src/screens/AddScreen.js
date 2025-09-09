@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert } from "react-native";
+import { View, TextInput, TouchableOpacity, Text, Alert, StyleSheet } from "react-native";
 import { addMahasiswa } from "../api";
 
 export default function AddScreen({ navigation }) {
@@ -35,18 +35,72 @@ export default function AddScreen({ navigation }) {
 
   return (
     <View style={{ padding: 20, gap: 10 }}>
-      <TextInput placeholder="NIM" value={form.nim} onChangeText={(v)=>setVal("nim", v)}
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }} />
-      <TextInput placeholder="Nama" value={form.name} onChangeText={(v)=>setVal("name", v)}
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }} />
-      <TextInput placeholder="Gender (Male/Female)" value={form.gender} onChangeText={(v)=>setVal("gender", v)}
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }} />
-      <TextInput placeholder="Alamat" value={form.address} onChangeText={(v)=>setVal("address", v)}
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }} />
-      <TextInput placeholder="No HP" value={form.phone} onChangeText={(v)=>setVal("phone", v)}
+      <TextInput
+        placeholder="NIM"
+        value={form.nim}
+        onChangeText={(v) => setVal("nim", v)}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Nama"
+        value={form.name}
+        onChangeText={(v) => setVal("name", v)}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Gender (Male/Female)"
+        value={form.gender}
+        onChangeText={(v) => setVal("gender", v)}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="Alamat"
+        value={form.address}
+        onChangeText={(v) => setVal("address", v)}
+        style={styles.input}
+      />
+      <TextInput
+        placeholder="No HP"
+        value={form.phone}
+        onChangeText={(v) => setVal("phone", v)}
         keyboardType="phone-pad"
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }} />
-      <Button title="Tambah" onPress={handleAdd} />
+        style={styles.input}
+      />
+
+      {/* Tombol Tambah */}
+      <View style={styles.buttonWrapper}>
+        <TouchableOpacity style={[styles.button, styles.tambah]} onPress={handleAdd}>
+          <Text style={styles.buttonText}>Tambah</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 6,
+    padding: 10,
+    marginBottom: 10,
+  },
+  buttonWrapper: {
+    alignItems: "center", 
+    marginTop: 10,
+  },
+  button: {
+    paddingVertical: 12,
+    paddingHorizontal: 30,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  tambah: {
+    backgroundColor: "green",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    fontSize: 16,
+  },
+});

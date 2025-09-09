@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, Alert } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from "react-native";
 import { getMahasiswaByNim } from "../api";
 
 export default function HomeScreen({ navigation }) {
@@ -20,16 +20,87 @@ export default function HomeScreen({ navigation }) {
   };
 
   return (
-    <View style={{ padding: 20, gap: 10 }}>
+    <View style={styles.container}>
+      <Text style={styles.title}>Masukkan NIM Mahasiswa</Text>
+
       <TextInput
         placeholder="Masukkan NIM"
         value={nim}
         onChangeText={setNim}
-        style={{ borderWidth: 1, borderRadius: 6, padding: 10 }}
+        style={styles.input}
       />
-      <Button title="Cari" onPress={handleSearch} />
-      <Button title="Tambah" onPress={() => navigation.navigate("Add")} />
-      <Button title="Hapus" onPress={() => navigation.navigate("Delete")} />
+
+      {/* Tombol sejajar */}
+      <View style={styles.buttonContainer}>
+        <TouchableOpacity
+          style={[styles.button, styles.tambah]}
+          onPress={() => navigation.navigate("Add")}
+        >
+          <Text style={styles.buttonText}>Tambah</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.hapus]}
+          onPress={() => navigation.navigate("Delete")}
+        >
+          <Text style={styles.buttonText}>Hapus</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.button, styles.cari]}
+          onPress={handleSearch}
+        >
+          <Text style={styles.buttonText}>Cari</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "#fff",
+    padding: 20,
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 20,
+  },
+  input: {
+    borderWidth: 1,
+    borderColor: "#ccc",
+    width: "100%",
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 20,
+  },
+  buttonContainer: {
+    flexDirection: "row",       // tombol berjejer horizontal
+    justifyContent: "space-between",
+    width: "100%",
+  },
+  button: {
+    flex: 1,
+    padding: 12,
+    marginHorizontal: 5,
+    borderRadius: 5,
+    alignItems: "center",
+  },
+  tambah: {
+    backgroundColor: "green",
+  },
+  hapus: {
+    backgroundColor: "red",
+  },
+  cari: {
+    backgroundColor: "blue",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+});
